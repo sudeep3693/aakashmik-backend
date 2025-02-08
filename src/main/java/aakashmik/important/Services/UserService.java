@@ -5,9 +5,12 @@ import aakashmik.important.Entities.Users;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.simple.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import java.io.IOException;
-import java.io.InputStream;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +19,7 @@ import java.util.stream.Collectors;
 public class UserService {
 
 
+    private static final Logger log = LoggerFactory.getLogger(UserService.class);
     Users user;
 
 
@@ -29,6 +33,18 @@ public class UserService {
             return new ArrayList<>();
         }
         System.out.println("file exists");
+        return objectMapper.readValue(inputStream, new TypeReference<List<Users>>() {
+
+        });
+    }
+
+    public List<Users> getUnverifiedUsers() throws IOException {
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("src/main/data/unverified.json");
+        if (inputStream == null) {
+            System.out.println("file not found");
+            return new ArrayList<>();
+        }
+        System.out.println("unverified file exists");
         return objectMapper.readValue(inputStream, new TypeReference<List<Users>>() {
 
         });
@@ -101,7 +117,74 @@ public class UserService {
                 return new ArrayList<>(); // Or handle the exception as needed
             }
     }
+
+
+    public String PostUnverified(Users user) throws IOException {
+        JSONObject obj = new JSONObject();
+        obj.put("name", user.getName());
+        obj.put("number", user.getNumber());
+        obj.put("category", user.getCategory());
+        obj.put("province", user.getProvince());
+        obj.put("district", user.getDistrict());
+        obj.put("city", user.getCity());
+        obj.put("latitude", user.getLatitude());
+        obj.put("longitude", user.getLongitude());
+
+        // File path: relative path to the 'data' folder
+        File file = new File("data/HandleUnVerified.json");
+
+        // Ensure the directory exists
+        if (!file.getParentFile().exists()) {
+            file.getParentFile().mkdirs();
+        }
+
+        // If the file doesn't exist, create it with an empty array
+        if (!file.exists()) {
+            file.createNewFile();
+            try (FileWriter fileWriter = new FileWriter(file)) {
+                fileWriter.write("[\n]"); // Create an empty JSON array
+                fileWriter.flush();
+            }
+        }
+
+        // Read the existing JSON array from the file
+        List<JSONObject> jsonArray = readJsonArrayFromFile(file);
+
+        // Append the new object to the existing array
+        jsonArray.add(obj);
+
+        // Write the updated JSON array back to the file
+        writeJsonArrayToFile(file, jsonArray);
+
+        return "success";
     }
+
+    private List<JSONObject> readJsonArrayFromFile(File file) throws IOException {
+        // Initialize an empty list if the file is empty or contains no valid JSON
+        List<JSONObject> jsonArray = new ArrayList<>();
+        try (FileReader fileReader = new FileReader(file)) {
+            jsonArray = objectMapper.readValue(fileReader, new TypeReference<List<JSONObject>>() {});
+            System.out.println("testing"+jsonArray);
+        } catch (Exception e) {
+            // Handle the case where file is empty or parsing fails (fallback to empty list)
+            e.printStackTrace();
+        }
+        return jsonArray;
+    }
+
+    private void writeJsonArrayToFile(File file, List<JSONObject> jsonArray) throws IOException {
+        // Write the updated JSON array back to the file
+        try (FileWriter fileWriter = new FileWriter(file)) {
+            System.out.println("Absolute path of created file: " + file.getAbsolutePath());
+            objectMapper.writerWithDefaultPrettyPrinter().writeValue(fileWriter, jsonArray);
+        }
+    }
+
+
+}
+
+
+
 
 
 //    @Autowired

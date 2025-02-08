@@ -3,6 +3,8 @@ package aakashmik.important.Controllers;
 import aakashmik.important.Entities.Users;
 import aakashmik.important.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -75,11 +77,23 @@ public class HomeController {
             usersList = userService.getUsersByLocation(id,10.10d);
         }
         catch (Exception e){
-            System.out.println(e +" error found in locatio fetching");
+            System.out.println(e +" error found in location fetching");
             usersList = null;
         }
         System.out.println("by Location successful");
         return usersList;
+    }
+
+    @PostMapping("/postDetailUnverified")
+    public ResponseEntity<String> postDetail(@RequestBody Users data) {
+        try {
+            System.out.println(data);
+            String result = userService.PostUnverified(data);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println(e + " error found");
+            return new ResponseEntity<>("Failed to process request", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 

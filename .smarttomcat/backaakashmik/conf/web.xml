@@ -2711,7 +2711,7 @@
   </mime-mapping>
   <mime-mapping>
     <extension>ngdat</extension>
-    <mime-type>application/vnd.nokia.n-gage.data</mime-type>
+    <mime-type>application/vnd.nokia.n-gage.data.data</mime-type>
   </mime-mapping>
   <mime-mapping>
     <extension>nitf</extension>
@@ -3302,7 +3302,7 @@
   </mime-mapping>
   <mime-mapping>
     <extension>rdz</extension>
-    <mime-type>application/vnd.data-vision.rdz</mime-type>
+    <mime-type>application/vnd.data.data-vision.rdz</mime-type>
   </mime-mapping>
   <mime-mapping>
     <extension>rep</extension>
@@ -3510,7 +3510,7 @@
   </mime-mapping>
   <mime-mapping>
     <extension>sfd-hdstx</extension>
-    <mime-type>application/vnd.hydrostatix.sof-data</mime-type>
+    <mime-type>application/vnd.hydrostatix.sof-data.data</mime-type>
   </mime-mapping>
   <mime-mapping>
     <extension>sfs</extension>
@@ -3932,7 +3932,7 @@
   </mime-mapping>
   <mime-mapping>
     <extension>tsd</extension>
-    <mime-type>application/timestamped-data</mime-type>
+    <mime-type>application/timestamped-data.data</mime-type>
   </mime-mapping>
   <mime-mapping>
     <extension>tsv</extension>
@@ -4036,11 +4036,11 @@
   </mime-mapping>
   <mime-mapping>
     <extension>uvd</extension>
-    <mime-type>application/vnd.dece.data</mime-type>
+    <mime-type>application/vnd.dece.data.data</mime-type>
   </mime-mapping>
   <mime-mapping>
     <extension>uvf</extension>
-    <mime-type>application/vnd.dece.data</mime-type>
+    <mime-type>application/vnd.dece.data.data</mime-type>
   </mime-mapping>
   <mime-mapping>
     <extension>uvg</extension>
@@ -4084,11 +4084,11 @@
   </mime-mapping>
   <mime-mapping>
     <extension>uvvd</extension>
-    <mime-type>application/vnd.dece.data</mime-type>
+    <mime-type>application/vnd.dece.data.data</mime-type>
   </mime-mapping>
   <mime-mapping>
     <extension>uvvf</extension>
-    <mime-type>application/vnd.dece.data</mime-type>
+    <mime-type>application/vnd.dece.data.data</mime-type>
   </mime-mapping>
   <mime-mapping>
     <extension>uvvg</extension>
